@@ -1,0 +1,59 @@
+.story-taps {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .app--mobile:not(.app--map-mode) .story-taps {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+  }
+
+  .story-taps__zone {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    pointer-events: auto;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Leave room for menu / lang / bottom sheet interactions */
+  .story-taps__zone--prev {
+    left: 0;
+    width: 32%;
+  }
+
+  .story-taps__zone--next {
+    right: 0;
+    width: 32%;
+  }
+
+  /* Map half only when bottom sheet is open */
+  .app--mobile.app--mobile-sheet .story-taps__zone {
+    top: 4.75rem;
+    bottom: 50dvh;
+  }
+
+  /* Full-bleed visual / web chapters */
+  .app--mobile.app--mobile-immersive .story-taps__zone {
+    top: 4.75rem;
+    bottom: 0;
+  }
+
+  /* Cover: leave bottom band free for tagline + sound + invite */
+  .app--cover .story-taps__zone {
+    bottom: 10.5rem;
+    top: 4.75rem;
+  }
+
+  .app--about .story-taps {
+    display: none;
+  }
+}

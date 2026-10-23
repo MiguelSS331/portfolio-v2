@@ -1,0 +1,48 @@
+.story-progress {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .app--mobile:not(.app--map-mode) .story-progress {
+    display: flex;
+    position: fixed;
+    top: 0.35rem;
+    left: 0.55rem;
+    right: 3.4rem; /* clear vertical lang / menu stack */
+    z-index: 75;
+    gap: 0.22rem;
+    pointer-events: none;
+  }
+
+  .story-progress__seg {
+    flex: 1;
+    height: 2.5px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 0 0 1px rgba(20, 20, 19, 0.08);
+    overflow: hidden;
+  }
+
+  .app--about .story-progress__seg,
+  .app--cover .story-progress__seg {
+    background: rgba(20, 20, 19, 0.14);
+  }
+
+  .story-progress__seg.is-done {
+    background: rgba(255, 255, 255, 0.92);
+  }
+
+  .app--about .story-progress__seg.is-done,
+  .app--cover .story-progress__seg.is-done {
+    background: rgba(20, 20, 19, 0.55);
+  }
+
+  .story-progress__seg.is-active {
+    background: rgba(255, 255, 255, 0.92);
+  }
+
+  .app--about .story-progress__seg.is-active,
+  .app--cover .story-progress__seg.is-active {
+    background: rgba(20, 20, 19, 0.75);
+  }
+}

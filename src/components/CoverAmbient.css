@@ -1,0 +1,61 @@
+.cover-ambient {
+  position: fixed;
+  left: 1.75rem;
+  bottom: 1.35rem;
+  z-index: 55;
+  width: 2.6rem;
+  height: 2.6rem;
+  margin: 0;
+  padding: 0;
+  border: 1px solid rgba(20, 20, 19, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--ink, #141413);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  pointer-events: auto;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  box-shadow: 0 8px 22px rgba(20, 20, 19, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease,
+    transform 0.3s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.cover-ambient.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.cover-ambient:hover {
+  border-color: rgba(20, 20, 19, 0.35);
+  background: #fff;
+}
+
+.cover-ambient.is-muted {
+  color: rgba(20, 20, 19, 0.45);
+}
+
+.cover-ambient__icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .cover-ambient {
+    left: 0.85rem;
+    bottom: 7.35rem;
+    z-index: 55;
+  }
+}

@@ -1,0 +1,41 @@
+:root {
+  color-scheme: light;
+  --ink: #141413;
+  --paper: #ffffff;
+  --accent: #b8442a;
+  --accent-soft: rgba(184, 68, 42, 0.2);
+  --font-ui: 'Nunito Sans', 'Avenir Next', Avenir, 'Segoe UI', sans-serif;
+  --font-mono: var(--font-ui);
+  --font-display: 'Instrument Serif', Georgia, serif;
+  /* Mexican rótulo / hand-painted sign energy for the cover tagline */
+  --font-rotulo: 'Fugaz One', 'Arial Black', Impact, sans-serif;
+  --rotulo-red: #c21807;
+  --rotulo-yellow: #f0c43a;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-ui);
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}

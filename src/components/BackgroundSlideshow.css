@@ -1,0 +1,112 @@
+.bg-slideshow {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  background: #1a1816;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.7s ease;
+}
+
+.bg-slideshow.is-active {
+  opacity: 1;
+}
+
+.bg-slideshow__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  transform: scale(1.04);
+  transition:
+    opacity 1.4s ease,
+    transform 5.5s ease;
+}
+
+.bg-slideshow__image.is-ready.is-current {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 1;
+}
+
+.bg-slideshow__shade {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(20, 18, 16, 0.28) 0%,
+      transparent 42%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(20, 18, 16, 0.22) 0%,
+      transparent 35%
+    );
+}
+
+.bg-slideshow__nav {
+  position: absolute;
+  left: 50%;
+  bottom: 1.6rem;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  pointer-events: auto;
+}
+
+.bg-slideshow__arrow {
+  width: 2.6rem;
+  height: 2.6rem;
+  margin: 0;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  background: rgba(20, 18, 16, 0.35);
+  color: #f7f4ef;
+  font-size: 1.65rem;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.bg-slideshow__arrow:hover {
+  background: rgba(184, 68, 42, 0.85);
+  border-color: var(--accent, #b8442a);
+}
+
+.bg-slideshow__counter {
+  margin: 0;
+  min-width: 3.2rem;
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: rgba(247, 244, 239, 0.78);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+}
+
+@media (max-width: 768px) {
+  .bg-slideshow__nav {
+    bottom: 1.1rem;
+  }
+
+  .bg-slideshow__arrow {
+    width: 2.35rem;
+    height: 2.35rem;
+  }
+}

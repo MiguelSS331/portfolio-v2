@@ -1,0 +1,118 @@
+.overview-map {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  background: #ffffff;
+  transition:
+    opacity 0.4s ease,
+    visibility 0.4s ease;
+}
+
+.overview-map.is-active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.overview-map__canvas {
+  position: absolute;
+  inset: 0;
+  background: #ffffff;
+  transition: left 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Map page only: shift canvas so the left detail panel does not cover it */
+.overview-map.has-detail .overview-map__canvas {
+  left: min(42vw, 28rem);
+}
+
+/* Fan uses map.project() (canvas space) — keep it aligned with the shifted canvas */
+.overview-map.has-detail .overview-fan {
+  left: min(42vw, 28rem);
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.overview-map.has-detail .category-legend {
+  left: calc(min(42vw, 28rem) + 1rem);
+}
+
+.overview-map__canvas .mapboxgl-canvas,
+.overview-map__canvas .mapboxgl-map {
+  background: #ffffff;
+}
+
+.overview-map__canvas .mapboxgl-ctrl-top-right {
+  top: 4.25rem;
+  right: 0.75rem;
+}
+
+/* Root must not use transform — Mapbox positions the marker with it */
+.overview-marker {
+  width: 56px;
+  height: 56px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.overview-marker__inner {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  filter: drop-shadow(0 4px 10px rgba(20, 20, 19, 0.18));
+  transition: transform 0.2s ease;
+}
+
+.overview-marker:hover .overview-marker__inner {
+  transform: scale(1.08);
+}
+
+.overview-marker__core {
+  position: relative;
+  z-index: 1;
+  display: block;
+}
+
+.overview-marker__halo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0.85);
+  opacity: 0.35;
+  pointer-events: none;
+  animation: overview-halo-pulse 1.7s ease-out infinite;
+}
+
+@keyframes overview-halo-pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.85);
+    opacity: 0.42;
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(1.55);
+    opacity: 0.08;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.7);
+    opacity: 0;
+  }
+}
+
+.app--map-mode .story-map {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+}

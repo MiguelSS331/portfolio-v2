@@ -1,0 +1,85 @@
+.point-card-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+}
+
+.point-card-leader {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.point-card-leader__line {
+  fill: none;
+  transition-property: stroke-dashoffset;
+  transition-timing-function: ease-out;
+}
+
+.point-card-leader__dot {
+  opacity: 0;
+  transition: opacity 0.25s ease 0.2s;
+}
+
+.point-card-leader__dot.is-grown {
+  opacity: 1;
+}
+
+.point-card {
+  position: absolute;
+  background: #ffffff;
+  border: 1px solid rgba(20, 20, 19, 0.08);
+  box-shadow:
+    0 10px 28px rgba(20, 20, 19, 0.12),
+    0 1px 0 rgba(255, 255, 255, 0.8) inset;
+  overflow: hidden;
+  animation: point-card-in 0.35s ease;
+}
+
+.point-card__media {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #e8e4dc;
+}
+
+.point-card__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.point-card__body {
+  padding: 0.85rem 0.95rem 1rem;
+}
+
+.point-card__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.point-card__subtitle {
+  margin: 0.4rem 0 0;
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  color: rgba(20, 20, 19, 0.65);
+}
+
+@keyframes point-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
