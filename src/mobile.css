@@ -620,44 +620,35 @@
     pointer-events: none;
   }
 
-  /* Keep About collapsed until the user taps into it */
-  .app--mobile:not(.app--about) .scroll-chapter--about {
+  /* Keep About chapter collapsed on mobile — content mounts in .mobile-about-overlay */
+  .app--mobile .scroll-chapter--about {
     min-height: 0 !important;
     height: 0 !important;
     max-height: 0 !important;
     overflow: hidden !important;
     pointer-events: none !important;
-  }
-
-  .app--mobile:not(.app--about) .scroll-chapter--about .about-me {
-    display: none;
+    padding: 0 !important;
   }
 
   /*
-   * About Me (mobile): dedicated full-screen scroller.
-   * Cannot scroll “up” into prior story chapters — only About content scrolls.
+   * About Me (mobile): fixed full-screen overlay under Story/Map chrome.
+   * Own scroller — cannot scroll “up” into prior story chapters.
    */
-  .app--mobile.app--about .scroll-track {
-    pointer-events: none;
-    z-index: 6;
+  .app--mobile .mobile-about-overlay {
+    display: none;
   }
 
-  .app--mobile.app--about .scroll-chapter:not(.scroll-chapter--about) {
-    display: none !important;
-  }
-
-  .app--mobile.app--about .scroll-chapter--about {
-    position: fixed !important;
-    inset: 0 !important;
-    z-index: 6;
-    min-height: 100dvh !important;
-    height: 100dvh !important;
-    max-height: 100dvh !important;
-    overflow-x: hidden !important;
-    overflow-y: auto !important;
+  .app--mobile.app--about .mobile-about-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
-    pointer-events: auto !important;
+    pointer-events: auto;
     background: #ffffff;
   }
 
@@ -667,14 +658,22 @@
     visibility: hidden;
   }
 
-  .app--mobile.app--about .about-me {
+  .app--mobile.app--about .scroll-track {
+    pointer-events: none;
+    visibility: hidden;
+  }
+
+  .app--mobile.app--about .mobile-about-overlay .about-me {
     position: relative;
     inset: auto;
     display: flex;
+    flex-direction: column;
     height: auto;
     max-height: none;
     min-height: 100%;
     overflow: visible;
+    opacity: 1;
+    visibility: visible;
     /* Title starts under Story/Map toggle */
     padding-top: 5.35rem;
     padding-right: 3.75rem;
@@ -682,7 +681,7 @@
     padding-bottom: 2rem;
   }
 
-  .app--mobile.app--about .about-me__title {
+  .app--mobile.app--about .mobile-about-overlay .about-me__title {
     margin: 0 0 0.95rem;
     font-size: clamp(1.55rem, 6.5vw, 2rem);
   }

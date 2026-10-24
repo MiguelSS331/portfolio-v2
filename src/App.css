@@ -438,6 +438,7 @@ html {
 
 .map-chrome__portrait--link {
   cursor: pointer;
+  pointer-events: auto;
 }
 
 /* Cover only: big portrait above text, near vertical center */

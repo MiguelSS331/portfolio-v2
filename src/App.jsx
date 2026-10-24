@@ -255,6 +255,16 @@ export default function App() {
     };
   }, [isMobile, mapMode, activeIndex, localizedChapters]);
 
+  // After About overlay mounts, pin its scroll to the top
+  useEffect(() => {
+    if (!isMobile) return;
+    const onAbout = Boolean(localizedChapters[activeIndex]?.aboutMe);
+    if (!onAbout) return;
+    const aboutIndex = localizedChapters.findIndex((c) => c.aboutMe);
+    const el = chapterRefs.current[aboutIndex];
+    if (el) el.scrollTop = 0;
+  }, [isMobile, activeIndex, localizedChapters]);
+
   const activeYear = localizedChapters[activeIndex]?.year ?? localizedChapters[0].year;
   const activeChapter = localizedChapters[activeIndex] ?? localizedChapters[0];
   const showInvite = activeIndex === 0;
@@ -564,7 +574,8 @@ export default function App() {
                   : `${chapter.year}: ${chapter.title}`
               }
             >
-              {chapter.aboutMe ? (
+              {/* Desktop: About lives in the scroll chapter. Mobile uses overlay below. */}
+              {chapter.aboutMe && !isMobile ? (
                 <AboutMe active={isActive} />
               ) : null}
               {hasPanel ? (
@@ -588,6 +599,19 @@ export default function App() {
           );
         })}
       </main>
+
+      {/* Mobile About: fixed overlay (avoids zero-height chapter / stacking bugs) */}
+      {isMobile && showAbout && !mapMode ? (
+        <div
+          className="mobile-about-overlay"
+          ref={(el) => {
+            const aboutIndex = localizedChapters.findIndex((c) => c.aboutMe);
+            if (aboutIndex >= 0) chapterRefs.current[aboutIndex] = el;
+          }}
+        >
+          <AboutMe active />
+        </div>
+      ) : null}
     </div>
   );
 }
