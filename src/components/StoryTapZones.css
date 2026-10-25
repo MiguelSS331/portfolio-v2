@@ -47,9 +47,9 @@
     bottom: 0;
   }
 
-  /* Cover: leave bottom band free for tagline + sound + invite */
+  /* Cover: leave bottom band free for tap cue + rótulo + lead + sound */
   .app--cover .story-taps__zone {
-    bottom: 10.5rem;
+    bottom: 9rem;
     top: 4.75rem;
   }
 

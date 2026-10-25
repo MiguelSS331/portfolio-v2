@@ -2,16 +2,18 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { ACCENT } from '../data/chapters';
 import './PointCard.css';
 
-const CARD_W = 260;
-const CARD_OFFSET = { x: 56, y: -150 };
+const DESKTOP = { w: 260, offset: { x: 56, y: -150 }, edge: 12, bottomSafe: 12 };
+const MOBILE = { w: 148, offset: { x: 22, y: -72 }, edge: 36, bottomSafe: 120 };
 const LINE_GROW_MS = 400;
 
 /**
  * White hover card with animated leader line from the map point.
+ * `compact` = mobile: smaller card + more edge inset so taps around it still work.
  */
-export default function PointCard({ point, anchor, stageSize }) {
+export default function PointCard({ point, anchor, stageSize, compact = false }) {
   const cardRef = useRef(null);
-  const [cardSize, setCardSize] = useState({ w: CARD_W, h: 220 });
+  const layout = compact ? MOBILE : DESKTOP;
+  const [cardSize, setCardSize] = useState({ w: layout.w, h: compact ? 150 : 220 });
   const [lineReady, setLineReady] = useState(false);
 
   const open = Boolean(point?.card && anchor);
@@ -20,7 +22,7 @@ export default function PointCard({ point, anchor, stageSize }) {
     if (!open || !cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
     setCardSize({ w: rect.width, h: rect.height });
-  }, [open, point?.id, stageSize?.w, stageSize?.h]);
+  }, [open, point?.id, stageSize?.w, stageSize?.h, compact]);
 
   useEffect(() => {
     if (!open) {
@@ -41,18 +43,25 @@ export default function PointCard({ point, anchor, stageSize }) {
   const preferUp = anchor.y > stageH * 0.42;
 
   let cardLeft = preferRight
-    ? anchor.x + CARD_OFFSET.x
-    : anchor.x - CARD_OFFSET.x - cardSize.w;
+    ? anchor.x + layout.offset.x
+    : anchor.x - layout.offset.x - cardSize.w;
   let cardTop = preferUp
-    ? anchor.y + CARD_OFFSET.y
-    : anchor.y - CARD_OFFSET.y;
+    ? anchor.y + layout.offset.y
+    : anchor.y - layout.offset.y;
 
-  cardLeft = Math.max(12, Math.min(cardLeft, stageW - cardSize.w - 12));
-  cardTop = Math.max(12, Math.min(cardTop, stageH - cardSize.h - 12));
+  const topSafe = compact ? 56 : layout.edge;
+  cardLeft = Math.max(
+    layout.edge,
+    Math.min(cardLeft, stageW - cardSize.w - layout.edge),
+  );
+  cardTop = Math.max(
+    topSafe,
+    Math.min(cardTop, stageH - cardSize.h - layout.bottomSafe),
+  );
 
   // Attach leader to the card edge closest to the point
   const attachX = preferRight ? cardLeft : cardLeft + cardSize.w;
-  const attachY = cardTop + Math.min(56, cardSize.h * 0.28);
+  const attachY = cardTop + Math.min(compact ? 36 : 56, cardSize.h * 0.28);
 
   const dx = attachX - anchor.x;
   const dy = attachY - anchor.y;
@@ -70,7 +79,7 @@ export default function PointCard({ point, anchor, stageSize }) {
           x2={attachX}
           y2={attachY}
           stroke={ACCENT}
-          strokeWidth="1.5"
+          strokeWidth={compact ? 1.2 : 1.5}
           strokeLinecap="round"
           style={{
             strokeDasharray: length,
@@ -84,16 +93,18 @@ export default function PointCard({ point, anchor, stageSize }) {
             .join(' ')}
           cx={attachX}
           cy={attachY}
-          r="3.5"
+          r={compact ? 2.5 : 3.5}
           fill={ACCENT}
         />
       </svg>
 
       <article
         ref={cardRef}
-        className="point-card"
+        className={['point-card', compact ? 'point-card--compact' : '']
+          .filter(Boolean)
+          .join(' ')}
         style={{
-          width: CARD_W,
+          width: layout.w,
           left: cardLeft,
           top: cardTop,
         }}

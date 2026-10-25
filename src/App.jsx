@@ -331,6 +331,8 @@ export default function App() {
 
   const inviteCta =
     isMobile && t.ui.inviteCtaMobile ? t.ui.inviteCtaMobile : t.ui.inviteCta;
+  const inviteLead =
+    isMobile && t.ui.inviteLeadMobile ? t.ui.inviteLeadMobile : t.ui.inviteLead;
 
   // Progress bars: dark on light grounds (cover/about/map sheet), light on dark media
   const progressOnDarkMedia =
@@ -403,7 +405,11 @@ export default function App() {
           onInteractingChange={setWebInteracting}
         />
 
-        {!mapMode && !showAbout && !mobileImmersive ? (
+        {/* Mobile: veil only on cover — later chapters need a clear map */}
+        {!mapMode &&
+        !showAbout &&
+        !mobileImmersive &&
+        (!isMobile || showInvite) ? (
           <div className="map-veil" aria-hidden="true" />
         ) : null}
 
@@ -496,21 +502,51 @@ export default function App() {
         ) : null}
 
         {isMobile && showInvite && !mapMode ? (
-          <p className="map-chrome__tagline map-chrome__tagline--cover-mobile">
-            <span className="map-chrome__tagline-spark" aria-hidden="true" />
-            <span className="map-chrome__tagline-text">{t.ui.tagline}</span>
-            <span className="map-chrome__tagline-spark" aria-hidden="true" />
-          </p>
+          <>
+            {/* Above rótulo, right edge: plain text + icon (no button frame) */}
+            <p
+              className={[
+                'journey-invite',
+                'journey-invite--mobile-cta',
+                showInvite ? 'is-visible' : '',
+              ]
+                .filter(Boolean)
+                .join(' ')}
+              aria-hidden={!showInvite}
+            >
+              <span className="journey-invite__cta">{inviteCta}</span>
+              <span className="journey-invite__tap-icon" aria-hidden="true">
+                <img src="/icons/tap.svg" alt="" width={22} height={22} />
+              </span>
+            </p>
+            <p className="map-chrome__tagline map-chrome__tagline--cover-mobile">
+              <span className="map-chrome__tagline-spark" aria-hidden="true" />
+              <span className="map-chrome__tagline-text">{t.ui.tagline}</span>
+              <span className="map-chrome__tagline-spark" aria-hidden="true" />
+            </p>
+            <p
+              className={[
+                'journey-invite',
+                'journey-invite--mobile-lead',
+                showInvite ? 'is-visible' : '',
+              ]
+                .filter(Boolean)
+                .join(' ')}
+              aria-hidden={!showInvite}
+            >
+              <span className="journey-invite__lead">{inviteLead}</span>
+            </p>
+          </>
         ) : null}
 
-        {!mapMode ? (
+        {!mapMode && !(isMobile && showInvite) ? (
           <p
             className={['journey-invite', showInvite ? 'is-visible' : '']
               .filter(Boolean)
               .join(' ')}
             aria-hidden={!showInvite}
           >
-            <span className="journey-invite__lead">{t.ui.inviteLead}</span>
+            <span className="journey-invite__lead">{inviteLead}</span>
             <span className="journey-invite__cta">{inviteCta}</span>
           </p>
         ) : null}
@@ -520,6 +556,7 @@ export default function App() {
             point={focus?.point ?? null}
             anchor={focus?.anchor ?? null}
             stageSize={stageSize}
+            compact={isMobile}
           />
         ) : null}
       </div>
