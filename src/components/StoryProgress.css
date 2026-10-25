@@ -18,31 +18,28 @@
     flex: 1;
     height: 2.5px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.35);
-    box-shadow: 0 0 0 1px rgba(20, 20, 19, 0.08);
     overflow: hidden;
   }
 
-  .app--about .story-progress__seg,
-  .app--cover .story-progress__seg {
-    background: rgba(20, 20, 19, 0.14);
+  /* Light backgrounds (cover, about, map sheet): dark gray bars */
+  .app--progress-dark .story-progress__seg {
+    background: rgba(20, 20, 19, 0.28);
+    box-shadow: none;
   }
 
-  .story-progress__seg.is-done {
-    background: rgba(255, 255, 255, 0.92);
+  .app--progress-dark .story-progress__seg.is-done,
+  .app--progress-dark .story-progress__seg.is-active {
+    background: rgba(20, 20, 19, 0.9);
   }
 
-  .app--about .story-progress__seg.is-done,
-  .app--cover .story-progress__seg.is-done {
-    background: rgba(20, 20, 19, 0.55);
+  /* Dark media (slideshow / video / web): light gray bars */
+  .app--progress-light .story-progress__seg {
+    background: rgba(255, 255, 255, 0.35);
+    box-shadow: none;
   }
 
-  .story-progress__seg.is-active {
-    background: rgba(255, 255, 255, 0.92);
-  }
-
-  .app--about .story-progress__seg.is-active,
-  .app--cover .story-progress__seg.is-active {
-    background: rgba(20, 20, 19, 0.75);
+  .app--progress-light .story-progress__seg.is-done,
+  .app--progress-light .story-progress__seg.is-active {
+    background: rgba(255, 255, 255, 0.95);
   }
 }

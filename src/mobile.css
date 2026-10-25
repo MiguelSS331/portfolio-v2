@@ -350,18 +350,63 @@
     padding: 0.45rem 0.85rem 2rem;
   }
 
-  /* Meta lives under the mode toggle — hide duplicate panel headers */
-  .app--mobile .project-panel__date,
-  .app--mobile .project-panel__title,
-  .app--mobile .project-panel__category,
-  .app--mobile .project-panel__tags,
-  .app--mobile .project-panel__authors {
+  /*
+   * Sheet meta: year → title → category/tags, then image.
+   * Logos / PDF / description follow below (scroll).
+   */
+  .app--mobile.app--mobile-sheet .project-panel__date {
+    display: block;
+    order: 1;
+    margin: 0;
+    font-size: 0.62rem;
+  }
+
+  .app--mobile.app--mobile-sheet .project-panel__title {
+    display: block;
+    order: 2;
+    margin: 0.28rem 0 0;
+    font-size: clamp(1.05rem, 4.2vw, 1.28rem);
+    line-height: 1.18;
+  }
+
+  .app--mobile.app--mobile-sheet .project-panel__category {
+    display: block;
+    order: 3;
+    margin: 0.28rem 0 0;
+    font-size: 0.58rem;
+  }
+
+  .app--mobile.app--mobile-sheet .project-panel__tags {
+    display: flex;
+    order: 4;
+    margin: 0.35rem 0 0;
+  }
+
+  .app--mobile.app--mobile-sheet .project-panel__tag {
+    font-size: 0.52rem;
+    padding: 0.12rem 0.36rem;
+  }
+
+  .app--mobile.app--mobile-sheet .project-panel__authors {
     display: none;
   }
 
-  /* Smaller logos so none are clipped at the sheet edge */
+  .app--mobile.app--mobile-sheet .project-panel__carousel {
+    order: 5;
+    margin-top: 0.55rem;
+    aspect-ratio: auto;
+    min-height: 12.5rem;
+    height: clamp(12.5rem, 44vw, 16.5rem);
+    flex-shrink: 0;
+  }
+
+  .app--mobile.app--mobile-sheet .project-panel__hint {
+    order: 6;
+  }
+
   .app--mobile.app--mobile-sheet .logo-marquee {
-    margin: 0.05rem 0 0.35rem;
+    order: 7;
+    margin: 0.55rem 0 0.2rem;
     padding: 0 0.15rem;
   }
 
@@ -382,12 +427,18 @@
     display: none;
   }
 
-  /* Bigger project image under the logos — uses most of the sheet above the fold */
-  .app--mobile.app--mobile-sheet .project-panel__carousel {
-    margin-top: 0.1rem;
-    aspect-ratio: auto;
-    min-height: 15.5rem;
-    height: clamp(15.5rem, 52vw, 19.5rem);
+  .app--mobile.app--mobile-sheet .pdf-viewer,
+  .app--mobile.app--mobile-sheet .project-panel__pdf-reveal {
+    order: 8;
+  }
+
+  .app--mobile.app--mobile-sheet .project-panel__description {
+    order: 9;
+  }
+
+  .app--mobile.app--mobile-sheet .project-panel__after-gallery,
+  .app--mobile.app--mobile-sheet .project-panel__footer-logo {
+    order: 10;
   }
 
   .app--mobile.app--mobile-sheet .project-panel__slide {
@@ -471,42 +522,9 @@
     display: none;
   }
 
-  /* Title / year / category — under Story/Map switcher, with soft blur plate */
-  .app--mobile.app--mobile-sheet .chapter-label {
-    position: absolute;
-    top: 5.35rem;
-    left: 0.65rem;
-    right: auto;
-    bottom: auto;
-    max-width: min(62vw, 14.5rem);
-    text-align: left;
-    z-index: 22;
-    pointer-events: none;
-    padding: 0.45rem 0.55rem;
-    border-radius: 0.55rem;
-    background: rgba(244, 242, 238, 0.55);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-  }
-
-  .app--mobile .chapter-label__year {
-    font-size: 0.62rem;
-  }
-
-  .app--mobile .chapter-label__title {
-    font-size: clamp(0.92rem, 3.6vw, 1.12rem);
-    line-height: 1.15;
-  }
-
-  .app--mobile .chapter-label__category {
-    font-size: 0.58rem;
-    margin-top: 0.2rem;
-  }
-
-  .app--mobile .chapter-label__sub,
-  .app--mobile .chapter-label__tags,
-  .app--mobile .chapter-label__authors {
-    display: none;
+  /* Title lives in the bottom sheet — keep map half clear */
+  .app--mobile .chapter-label {
+    display: none !important;
   }
 
   /* Upper-half media when sheet is open */
@@ -674,10 +692,9 @@
     overflow: visible;
     opacity: 1;
     visibility: visible;
-    /* Title starts under Story/Map toggle */
+    /* Title under Story/Map; equal side margins */
     padding-top: 5.35rem;
-    padding-right: 3.75rem;
-    padding-left: clamp(1.1rem, 3vw, 2rem);
+    padding-inline: clamp(1.1rem, 3vw, 2rem);
     padding-bottom: 2rem;
   }
 

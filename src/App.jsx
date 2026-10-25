@@ -321,15 +321,24 @@ export default function App() {
   const showMobileSheet =
     isMobile && !mapMode && !showInvite && !showAbout && !mobileImmersive && panelOpen;
 
+  // Desktop only — on mobile the sheet panel carries year/title/tags
   const showChapterLabel =
+    !isMobile &&
     !mapMode &&
     !showInvite &&
     !showAbout &&
-    !mobileImmersive &&
-    (!panelOpen || isMobile);
+    !panelOpen;
 
   const inviteCta =
     isMobile && t.ui.inviteCtaMobile ? t.ui.inviteCtaMobile : t.ui.inviteCta;
+
+  // Progress bars: dark on light grounds (cover/about/map sheet), light on dark media
+  const progressOnDarkMedia =
+    !mapMode &&
+    (mobileImmersive ||
+      ((showSlideshow || showBackgroundVideo || showWebEmbed) &&
+        !showMobileSheet));
+  const progressTone = progressOnDarkMedia ? 'light' : 'dark';
 
   return (
     <div
@@ -348,6 +357,7 @@ export default function App() {
         mapMode ? 'app--map-mode' : '',
         mapMode && mapProject ? 'app--map-detail' : '',
         activeIndex > 0 && !mapMode && !showAbout ? 'app--scrolled' : '',
+        isMobile && !mapMode ? `app--progress-${progressTone}` : '',
       ]
         .filter(Boolean)
         .join(' ')}
